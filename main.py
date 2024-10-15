@@ -78,6 +78,7 @@ def show_bar():
 def line_bar():
     file = itemIdEntry.get()
     df = pd.read_csv(f'{file}.csv')
+    df.sort_values(by = 'last')
     x = df['iq']
     y = df['cgpa']
     plt.xlabel('IQ', fontsize=18)
