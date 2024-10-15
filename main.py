@@ -1,6 +1,6 @@
 from fileinput import filename
 from tkinter import *
-from tkinter import ttk
+from tkinter import ttk, filedialog
 from tkinter import messagebox
 import tkinter as tk
 import random
@@ -21,10 +21,10 @@ def show_bar():
     plt.show()
 
 
-def line_bar():
+def line_bar(header):
     file = itemIdEntry.get()
     df = pd.read_csv(f'{file}.csv')
-    d = df.sort_values(by='iq',ascending=False)
+    d = df.sort_values(by=str(header), ascending=False)
     x = d['iq']
     y = d['cgpa']
     plt.xlabel('IQ', fontsize=18)
@@ -32,6 +32,13 @@ def line_bar():
     plt.scatter(x, y)
     plt.plot(x, y)
     plt.show()
+
+
+def get_header(file_name: str):
+    with open(file_name+".csv", mode='r') as file:
+        csv_reader = csv.reader(file)
+        header = next(csv_reader)
+        return header
 
 
 def exit1():
@@ -45,7 +52,7 @@ if __name__ == "__main__":
 
     placeholderArray = ['', '', '', '', '']
     plt.style.use('bmh')
-    categoryArray = ['student_clustering', 'Computer Parts', 'Repair Tools', 'Gadgets']
+    fileArray = ['student_clustering', 'Computer Parts', 'Repair Tools', 'Gadgets']
 
     screen_width = window.winfo_screenwidth()
     screen_height = window.winfo_screenheight()
@@ -61,16 +68,20 @@ if __name__ == "__main__":
     entriesFrame = tk.LabelFrame(frame, text="Input", borderwidth=5)
 
     btn_color = "#196E78"
-    item_id_value = StringVar()
+    file_value = StringVar(value=fileArray[0])
+    header = StringVar()
     manageFrame = tk.LabelFrame(frame, text="Graph", borderwidth=5)
     manageFrame.grid(row=0, column=0, sticky="w", padx=100, pady=20, ipadx=5)
     save_btn = Button(manageFrame, text="BarChart", width=10, borderwidth=3, bg=btn_color, fg='white',
-                     command=lambda: show_bar())
+                      command=lambda: show_bar())
     update_btn = Button(manageFrame, text="Line", width=10, borderwidth=3, bg=btn_color, fg='white',
-                       command=lambda: line_bar())
+                        command=lambda: line_bar(header))
     delete_Btn = Button(manageFrame, text="DELETE", width=10, borderwidth=3, bg=btn_color, fg='white')
     itemIdLabel = Label(entriesFrame, text="ITEM ID", anchor="e", width=10)
-    itemIdEntry = ttk.Combobox(entriesFrame, width=47, textvariable=item_id_value, values=categoryArray)
+    itemIdEntry = ttk.Combobox(entriesFrame, width=47, textvariable=file_value, values=fileArray)
+    item_header_label = Label(entriesFrame, text="Category", anchor="e", width=10)
+    headerArray = get_header(file_value.get())
+    item_header_entry = ttk.Combobox(entriesFrame, width=47, textvariable=header, values=headerArray)
     clearBtn = Button(manageFrame, text="CLEAR", width=10, borderwidth=3, bg=btn_color, fg='white',
                       command=lambda: itemIdEntry.delete(0, tk.END))
     exBtn = Button(manageFrame, text="EXIT", width=10, borderwidth=3, bg=btn_color, fg="white", command=lambda: exit1())
@@ -83,6 +94,7 @@ if __name__ == "__main__":
     entriesFrame.grid(row=1, column=0, sticky="w", padx=100, pady=20, ipadx=30)
     itemIdLabel.grid(row=0, column=0, padx=10)
     itemIdEntry.grid(row=0, column=2, padx=5, pady=5)
-
+    item_header_label.grid(row=1, column=0, padx=10)
+    item_header_entry.grid(row=1, column=2, padx=5, pady=5)
     window.resizable(False, False)
     window.mainloop()
