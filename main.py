@@ -87,9 +87,6 @@ def line_bar():
     plt.plot(x, y)
     plt.show()
 
-def clear():
-    itemIdvalue.set('')
-
 def exit1():
     window.destroy()
 
