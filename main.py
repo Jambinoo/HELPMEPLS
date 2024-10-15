@@ -52,7 +52,7 @@ if __name__ == "__main__":
 
     placeholderArray = ['', '', '', '', '']
     plt.style.use('bmh')
-    fileArray = ['student_clustering', 'Computer Parts', 'Repair Tools', 'Gadgets']
+    fileArray = ['student_clustering', 'Cars', 'Repair Tools', 'Gadgets']
 
     screen_width = window.winfo_screenwidth()
     screen_height = window.winfo_screenheight()
