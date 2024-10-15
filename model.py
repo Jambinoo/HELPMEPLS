@@ -9,10 +9,10 @@ class StockManagementSystem:
     def __init__(self, master):
         self.master = master
         self.master.title("Stock Management System")
-        self.window_width, self.window_height = 800, 600
+        self.window_width, self.window_height = 1280, 1080
         self.configure_window()
 
-        self.fileArray = ['student_clustering', 'Cars', 'Repair Tools', 'Gadgets']
+        self.fileArray = ['student_clustering', 'Cars', 'Bitkub', 'Company']
 
         self.file_value = tk.StringVar(value=self.fileArray[0])
         self.x_axis = tk.StringVar()
