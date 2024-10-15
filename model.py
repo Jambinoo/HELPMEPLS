@@ -40,7 +40,6 @@ class StockManagementSystem:
         line_chart_btn = tk.Button(manage_frame, text="Line", width=10, borderwidth=3,
                                    bg=btn_color, fg='white',
                                    command=self.line_chart)
-        delete_btn = tk.Button(manage_frame, text="DELETE", width=10, borderwidth=3, bg=btn_color, fg='white')
         clear_btn = tk.Button(manage_frame, text="CLEAR", width=10, borderwidth=3,
                               bg=btn_color, fg='white',
                               command=self.clear_selection)
@@ -63,9 +62,8 @@ class StockManagementSystem:
         manage_frame.grid(row=0, column=0, sticky="w", padx=100, pady=20, ipadx=5)
         bar_chart_btn.grid(row=0, column=0, padx=5, pady=5)
         line_chart_btn.grid(row=0, column=1, padx=5, pady=5)
-        delete_btn.grid(row=0, column=2, padx=5, pady=5)
-        clear_btn.grid(row=0, column=3, padx=5, pady=5)
-        exit_btn.grid(row=0, column=4, padx=5, pady=5)
+        clear_btn.grid(row=0, column=2, padx=5, pady=5)
+        exit_btn.grid(row=0, column=3, padx=5, pady=5)
 
         entries_frame.grid(row=1, column=0, sticky="w", padx=100, pady=20, ipadx=30)
         item_id_label.grid(row=0, column=0, padx=10)
