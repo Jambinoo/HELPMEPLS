@@ -12,6 +12,7 @@ import csv
 def show_bar():
     file = itemIdEntry.get()
     df = pd.read_csv(f'{file}.csv')
+    print(type(df))
     x = df['iq']
     y = df['cgpa']
     plt.xlabel('IQ', fontsize=18)
@@ -23,9 +24,9 @@ def show_bar():
 def line_bar():
     file = itemIdEntry.get()
     df = pd.read_csv(f'{file}.csv')
-    df.sort_values(by='last')
-    x = df['iq']
-    y = df['cgpa']
+    d = df.sort_values(by='iq',ascending=False)
+    x = d['iq']
+    y = d['cgpa']
     plt.xlabel('IQ', fontsize=18)
     plt.ylabel('CGPA', fontsize=16)
     plt.scatter(x, y)
