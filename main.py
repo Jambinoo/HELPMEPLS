@@ -8,6 +8,71 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import csv
 
+CGPA = 0
+IQ = 1
+
+def readCSV(filename):
+    infile = open(filename, 'r')
+    mylist = []
+    csv_obj = csv.reader(infile)
+    for row in csv_obj:
+        mylist.append(row)
+    infile.close()
+    return mylist
+
+def readRecordToList(filename):
+    infile = open(filename, 'r')
+    mylist = []
+    heading = next(infile)
+    csv_obj = csv.reader(infile)
+    for row in csv_obj:
+        mylist.append(row)
+    infile.close()
+    return mylist
+
+def typeConvert(mylist):
+    newList = []
+    for i in range(len(mylist)):
+        tmpcgpa = mylist[i][CGPA].strip()
+        tmpiq = mylist[i][IQ].strip()
+        newList.append([tmpcgpa,tmpiq])
+    return newList
+
+def merge(A, p, q, r):
+    if type(A) is list:
+        left = A[p: q+1]
+        right = A[q+1: r+1]
+    else:
+        left = list(A[p: q+1])
+        right = list(A[q+1: r+1])
+
+    i = 0
+    j = 0
+    k = p
+
+    while i < len(left) and j < len(right):
+        if left[i] <= right[j]:
+            A[k] = left[i]
+            i += 1
+        else:
+            A[k] = right[j]
+            j += 1
+        k += 1
+
+    if i < len(left):
+        A[k: r+1] = left[i:]
+    if j < len(right):
+        A[k: r+1] = right[j:]
+
+def merge_sort(A, p=0, r=None):
+    if r is None:
+        r = len(A)-1
+    if p>=r:
+        return
+    q = (p+r)//2
+    merge_sort(A,p,q)
+    merge_sort(A, q+1, r)
+    merge(A,p,q,r)
 
 window_width, window_height = 800, 600
 window=tkinter.Tk()
@@ -33,7 +98,7 @@ frame.pack()
 btnColor="#196E78"
 
 manageFrame=tkinter.LabelFrame(frame,text="Graph",borderwidth=5)
-manageFrame.grid(row=0,column=0,sticky="w",padx=[100],pady=20,ipadx=[5])
+manageFrame.grid(row=0,column=0,sticky="w",padx=100,pady=20,ipadx=5)
 
 saveBtn=Button(manageFrame,text="BarChart",width=10,borderwidth=3,bg=btnColor,fg='white',command = lambda : show_bar())
 updateBtn=Button(manageFrame,text="Line",width=10,borderwidth=3,bg=btnColor,fg='white',command = lambda : line_bar())
@@ -49,7 +114,7 @@ exBtn.grid(row=0,column=4,padx=5,pady=5)
 
 
 entriesFrame=tkinter.LabelFrame(frame,text="Input",borderwidth=5)
-entriesFrame.grid(row=1,column=0,sticky="w",padx=[100],pady=[0,20],ipadx=[30])
+entriesFrame.grid(row=1,column=0,sticky="w",padx=100,pady=20,ipadx=30)
 
 itemIdLabel=Label(entriesFrame,text="ITEM ID",anchor="e",width=10)
 
@@ -57,9 +122,9 @@ itemIdLabel=Label(entriesFrame,text="ITEM ID",anchor="e",width=10)
 itemIdLabel.grid(row=0,column=0,padx=10)
 
 
-itemIdvalue = StringVar()
+itemId_value = StringVar()
 
-itemIdEntry=ttk.Combobox(entriesFrame,width=47,textvariable=placeholderArray[4],values=categoryArray)
+itemIdEntry=ttk.Combobox(entriesFrame,width=47,textvariable = itemId_value,values=categoryArray)
 
 
 itemIdEntry.grid(row=0,column=2,padx=5,pady=5)
@@ -75,10 +140,10 @@ def show_bar():
     plt.show()
 
 
+
 def line_bar():
     file = itemIdEntry.get()
     df = pd.read_csv(f'{file}.csv')
-    df.sort_values(by = 'last')
     x = df['iq']
     y = df['cgpa']
     plt.xlabel('IQ', fontsize=18)
