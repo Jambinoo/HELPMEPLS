@@ -111,7 +111,7 @@ class StockManagementSystem:
 
     @staticmethod
     def get_csv_files():
-        files = [f[:-4] for f in os.listdir() if f.endswith('.csv')]
+        files = [file[:-4] for file in os.listdir() if file.endswith('.csv')]
         return files
 
     @staticmethod
