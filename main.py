@@ -10,6 +10,7 @@ import csv
 
 
 def show_bar(var1, var2):
+
     file = item_id_combobox.get()
     df = pd.read_csv(f'{file}.csv')
     x = str(var1)
