@@ -8,72 +8,6 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import csv
 
-CGPA = 0
-IQ = 1
-
-def readCSV(filename):
-    infile = open(filename, 'r')
-    mylist = []
-    csv_obj = csv.reader(infile)
-    for row in csv_obj:
-        mylist.append(row)
-    infile.close()
-    return mylist
-
-def readRecordToList(filename):
-    infile = open(filename, 'r')
-    mylist = []
-    heading = next(infile)
-    csv_obj = csv.reader(infile)
-    for row in csv_obj:
-        mylist.append(row)
-    infile.close()
-    return mylist
-
-def typeConvert(mylist):
-    newList = []
-    for i in range(len(mylist)):
-        tmpcgpa = mylist[i][CGPA].strip()
-        tmpiq = mylist[i][IQ].strip()
-        newList.append([tmpcgpa ,tmpiq])
-    return newList
-
-def merge(A, p, q, r):
-    if type(A) is list:
-        left = A[p: q+1]
-        right = A[q+1: r+1]
-    else:
-        left = list(A[p: q+1])
-        right = list(A[q+1: r+1])
-
-    i = 0
-    j = 0
-    k = p
-
-    while i < len(left) and j < len(right):
-        if left[i] <= right[j]:
-            A[k] = left[i]
-            i += 1
-        else:
-            A[k] = right[j]
-            j += 1
-        k += 1
-
-    if i < len(left):
-        A[k: r+1] = left[i:]
-    if j < len(right):
-        A[k: r+1] = right[j:]
-
-def merge_sort(A, p=0, r=None):
-    if r is None:
-        r = len(A)-1
-    if p>=r:
-        return
-    q = (p+r)//2
-    merge_sort(A,p,q)
-    merge_sort(A, q+1, r)
-    merge(A,p,q,r)
-
 
 window_width, window_height = 800, 600
 window=tkinter.Tk()
@@ -142,12 +76,6 @@ def show_bar():
 
 
 def line_bar():
-    file_name = "student_clustering.csv"
-    my_list = readRecordToList(file_name)
-    converted_list = typeConvert(my_list)
-    merge_sort(converted_list)
-    for row in converted_list:
-        print(row)
     file = itemIdEntry.get()
     df = pd.read_csv(f'{file}.csv')
     x = df['iq']
