@@ -8,23 +8,39 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import csv
 
+class Show:
+    def __init__(self):
+        self.name = itemIdEntry.get()
 
-def show_bar():
+    def show_both(self):
+        if self.name == 'student_clustering.csv':
+            return self.show_bar()
+        elif self.name == 'Cars.csv':
+            return self.show_car()
+
+    def show_bar(self):
+        df = pd.read_csv(f'{self.name}.csv')
+        x = df['iq']
+        y = df['cgpa']
+        plt.xlabel('IQ', fontsize=18)
+        plt.ylabel('CGPA', fontsize=16)
+        plt.bar(x, y)
+        plt.show()
+
+    def show_car(self):
+        gh = pd.read_csv(f'{self.name}.csv')
+        x = gh['Model']
+        y = gh['Sales']
+        plt.xlabel('Model', fontsize=18)
+        plt.ylabel('Sales', fontsize=16)
+        plt.bar(x, y)
+        plt.show()
+
+
+def line_bar():
     file = itemIdEntry.get()
     df = pd.read_csv(f'{file}.csv')
-    print(type(df))
-    x = df['iq']
-    y = df['cgpa']
-    plt.xlabel('IQ', fontsize=18)
-    plt.ylabel('CGPA', fontsize=16)
-    plt.bar(x, y)
-    plt.show()
-
-
-def line_bar(header):
-    file = itemIdEntry.get()
-    df = pd.read_csv(f'{file}.csv')
-    d = df.sort_values(by=str(header), ascending=False)
+    d = df.sort_values(by='iq', ascending=False)
     x = d['iq']
     y = d['cgpa']
     plt.xlabel('IQ', fontsize=18)
@@ -72,29 +88,29 @@ if __name__ == "__main__":
     header = StringVar()
     manageFrame = tk.LabelFrame(frame, text="Graph", borderwidth=5)
     manageFrame.grid(row=0, column=0, sticky="w", padx=100, pady=20, ipadx=5)
-    save_btn = Button(manageFrame, text="BarChart", width=10, borderwidth=3, bg=btn_color, fg='white',
-                      command=lambda: show_bar())
-    update_btn = Button(manageFrame, text="Line", width=10, borderwidth=3, bg=btn_color, fg='white',
-                        command=lambda: line_bar(header))
+    show_btn = Button(manageFrame, text="BarChart", width=10, borderwidth=3, bg=btn_color, fg='white',
+                      command=lambda: Show())
+    line_btn = Button(manageFrame, text="Line", width=10, borderwidth=3, bg=btn_color, fg='white',
+                        command=lambda: line_bar())
     delete_Btn = Button(manageFrame, text="DELETE", width=10, borderwidth=3, bg=btn_color, fg='white')
-    itemIdLabel = Label(entriesFrame, text="ITEM ID", anchor="e", width=10)
+    itemIdLabel = Label(entriesFrame, text="File Name", anchor="e", width=10)
     itemIdEntry = ttk.Combobox(entriesFrame, width=47, textvariable=file_value, values=fileArray)
-    item_header_label = Label(entriesFrame, text="Category", anchor="e", width=10)
-    headerArray = get_header(file_value.get())
-    item_header_entry = ttk.Combobox(entriesFrame, width=47, textvariable=header, values=headerArray)
+    #item_header_label = Label(entriesFrame, text="Category", anchor="e", width=10)
+    #headerArray = get_header(file_value.get())
+    #item_header_entry = ttk.Combobox(entriesFrame, width=47, textvariable=header, values=headerArray)
     clearBtn = Button(manageFrame, text="CLEAR", width=10, borderwidth=3, bg=btn_color, fg='white',
                       command=lambda: itemIdEntry.delete(0, tk.END))
     exBtn = Button(manageFrame, text="EXIT", width=10, borderwidth=3, bg=btn_color, fg="white", command=lambda: exit1())
 
-    save_btn.grid(row=0, column=0, padx=5, pady=5)
-    update_btn.grid(row=0, column=1, padx=5, pady=5)
+    show_btn.grid(row=0, column=0, padx=5, pady=5)
+    line_btn.grid(row=0, column=1, padx=5, pady=5)
     delete_Btn.grid(row=0, column=2, padx=5, pady=5)
     clearBtn.grid(row=0, column=3, padx=5, pady=5)
     exBtn.grid(row=0, column=4, padx=5, pady=5)
     entriesFrame.grid(row=1, column=0, sticky="w", padx=100, pady=20, ipadx=30)
     itemIdLabel.grid(row=0, column=0, padx=10)
     itemIdEntry.grid(row=0, column=2, padx=5, pady=5)
-    item_header_label.grid(row=1, column=0, padx=10)
-    item_header_entry.grid(row=1, column=2, padx=5, pady=5)
+   # item_header_label.grid(row=1, column=0, padx=10)
+    #item_header_entry.grid(row=1, column=2, padx=5, pady=5)
     window.resizable(False, False)
     window.mainloop()
