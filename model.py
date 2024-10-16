@@ -10,7 +10,7 @@ class StockManagementSystem:
     def __init__(self, master):
         self.master = master
         self.master.title("Stock Management System")
-        self.window_width, self.window_height = 800, 600
+        self.window_width, self.window_height = 750, 300
         self.configure_window()
         self.fileArray = self.get_csv_files()
         self.file_value = tk.StringVar(value=self.fileArray[0])
@@ -22,7 +22,7 @@ class StockManagementSystem:
     def configure_window(self):
         screen_width = self.master.winfo_screenwidth()
         screen_height = self.master.winfo_screenheight()
-        position_top = int(screen_height / 2 - self.window_height / 2)
+        position_top = int(screen_height / 2.5 - self.window_height / 2)
         position_right = int(screen_width / 2 - self.window_width / 2)
         self.master.geometry(f'{self.window_width}x{self.window_height}+{position_right}+{position_top}')
         self.master.resizable(False, False)
