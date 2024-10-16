@@ -1,6 +1,6 @@
-from model import StockManagementSystem
+from model import Graph_plt
 import tkinter as tk
 if __name__ == "__main__":
     root = tk.Tk()
-    app = StockManagementSystem(root)
+    app = Graph_plt(root)
     root.mainloop()

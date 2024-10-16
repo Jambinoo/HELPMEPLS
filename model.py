@@ -6,10 +6,10 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 
-class StockManagementSystem:
+class Graph_plt:
     def __init__(self, master):
         self.master = master
-        self.master.title("Stock Management System")
+        self.master.title("Graph")
         self.window_width, self.window_height = 750, 300
         self.configure_window()
         self.fileArray = self.get_csv_files()
